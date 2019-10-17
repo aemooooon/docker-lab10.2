@@ -1,5 +1,6 @@
 # ocker-lab10.2
 
+```bash
 
 docker run -dit --name lab11a ubuntu /bin/bash # -d option, so we have to explicitly attach to the container if we want to work in the shell we launched.
 
@@ -9,3 +10,6 @@ docker network inspect bridge # inspect network named 'bridge'
 
 
 apt update && apt install iputils-ping # install ping tool on ubuntu
+
+
+```
