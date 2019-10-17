@@ -13,5 +13,8 @@ docker network inspect bridge # inspect network named 'bridge'
 
 apt update && apt install iputils-ping # install ping tool on ubuntu
 
+docker attach lab11c # attach lab11c
+# detach from the container without exiting the shell by entering Ctrl-p Ctrl-q
+
 
 ```
