@@ -1,7 +1,62 @@
 # Docker from Virtualization
 
 ## Docker Introducation
+* Installation
 
+> sudo apt-get install docker.io
+
+By defaut, the docker commands are only usable by root. The docker package created a docker group, but any member of that group can run commands without sudo. So add you `user` to the docker group with the command `sudo adduser user docker`.
+
+* Check the docker server running info with `docker info`
+```bash
+Containers: 24
+ Running: 5
+ Paused: 0
+ Stopped: 19
+Images: 28
+Server Version: 18.09.7
+Storage Driver: overlay2
+ Backing Filesystem: extfs
+ Supports d_type: true
+ Native Overlay Diff: true
+Logging Driver: json-file
+Cgroup Driver: cgroupfs
+Plugins:
+ Volume: local
+ Network: bridge host macvlan null overlay
+ Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+Swarm: inactive
+Runtimes: runc
+Default Runtime: runc
+Init Binary: docker-init
+containerd version:
+runc version: N/A
+init version: v0.18.0 (expected: fec3683b971d9c3ef73f284f176672c44b448662)
+Security Options:
+ apparmor
+ seccomp
+  Profile: default
+Kernel Version: 4.4.0-87-generic
+Operating System: Ubuntu 16.04.6 LTS
+OSType: linux
+Architecture: x86_64
+CPUs: 1
+Total Memory: 992.3MiB
+Name: placeholder-0
+ID: JQWU:UX5K:VCKI:45FF:GUUA:2J3H:XE4F:4BCL:PWXM:TRBB:764R:CHGY
+Docker Root Dir: /var/lib/docker
+Debug Mode (client): false
+Debug Mode (server): false
+Username: aemooooon
+Registry: https://index.docker.io/v1/
+Labels:
+Experimental: false
+Insecure Registries:
+ 127.0.0.0/8
+Live Restore Enabled: false
+
+WARNING: No swap limit support
+```
 
 ## Docker Network
 1. 不同的网络之间相互隔离，无法访问。
