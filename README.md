@@ -74,6 +74,17 @@ docker start fred # restart 'fred' container
 docker attach fred # attach 'fred' container to the console.(if run `docker ps` found the container is running without console)
 ```
 
+## Docker Images
+
+* Search images
+
+> docker search wordpress/debian/mssql
+
+* Pull image
+
+> docker pull debian:8.1 # Asked for the image with from the debian repository with the 8.1 tag
+
+
 ## Docker Network
 1. 不同的网络之间相互隔离，无法访问。
 2. 如果是用户自定义的网络，我们不仅可以通过IP地址访问，同时也能通过主机名访问。
