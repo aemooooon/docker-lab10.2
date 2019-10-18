@@ -131,7 +131,7 @@ CMD ["-DFOREGROUND"]
 # Since the ADD command specified an HTML file, you’ll need to place one inside your build context alongside the Dockerfile. This can just be a simple hello world page.
 ```
 4. Git commit and push the changes above.
-5. Build image with command `docker build -t="your-username/lab10.2"` or `docker build -t svendowideit/ambassador .` # -f 表示可以随便指定image存放的路径
+5. Build image with command `docker build -t="your-username/lab10.2"` or `docker build -t svendowideit/ambassador .` # 参数 -f 表示可以随便指定image存放的路径
 
 ref: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
