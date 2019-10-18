@@ -28,6 +28,7 @@ ea2782d9ba8c        lab-net             bridge              local
 
 > sudo docker network inspect networkn-name
 
+
 ## Run two container with together by one network
 We are going to create a simple service using a Python/Flask application in one container and an Nginx reverse proxy server in a second container. Then create a Docker network to connect the two containers.
 
@@ -75,4 +76,21 @@ server {
 This will cause nginx to send proxy requests to a flaskapp host.
 ```
 3. Build this image with the tag: `docker build -t="aemooooon/nginx" .`
+4. Now we can run two containers based on our images with the following commands.
+```bash
+docker run -d --rm --name flaskapp aemooooon/flaskapp
+docker run -d --rm --name nginx -p 8080:80 aemooooon/nginx
+```
+we can see does working, but not working together.
+
 ### Create a Docker Network
+We want to place our containers on their own isolated network. The Flask application container does not need to be reachable by anything but our nginx container. Create our network with the command:
+```bash
+docker network create app
+
+#then
+
+docker run -d --rm --name flaskapp --network app aemooooon/flaskapp
+docker run -d --rm --name nginx --network app -p 8080:80 aemooooon/nginx
+```
+Note that it doesn't matter in which order you start the containers.
