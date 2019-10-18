@@ -58,6 +58,22 @@ Live Restore Enabled: false
 WARNING: No swap limit support
 ```
 
+* Creaet a new container
+
+> docker run -i -t --name fred ubuntu /bin/bash
+
+The command above will create a new container named fred based on the ubuntu base image. We have told docker to run bash on the container, and the `-i` and `-t` options connect us to an interactive console on it. Run `top` to see what is running inside the container. Use `ip a` to inspect the container's network interfaces. Type `exit` to return to the host. 
+
+* Basical commands:
+
+```bash
+docker ps # list the containers that are running
+docker ps -a # list all containers regardless of running or not.
+docker inspect fred # get more information aobut the 'fred' container
+docker start fred # restart 'fred' container
+docker attach fred # attach 'fred' container to the console.(if run `docker ps` found the container is running without console)
+```
+
 ## Docker Network
 1. 不同的网络之间相互隔离，无法访问。
 2. 如果是用户自定义的网络，我们不仅可以通过IP地址访问，同时也能通过主机名访问。
