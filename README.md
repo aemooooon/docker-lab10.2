@@ -131,9 +131,10 @@ CMD ["-DFOREGROUND"]
 # Since the ADD command specified an HTML file, you’ll need to place one inside your build context alongside the Dockerfile. This can just be a simple hello world page.
 ```
 4. Git commit and push the changes above.
-5. Build image with command `docker build -t="your-username/lab10.2"` or `docker build -t svendowideit/ambassador .` # 参数 -f 表示可以随便指定image存放的路径
-
-ref: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+5. Build image with command `docker build -t="your-username/lab10.2"` or `docker build -t svendowideit/ambassador .` 参数 -f 表示可以随便指定image存放的路径 ref: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+6. Create dockerhub account and create repository like `aemooooon`
+7. push image with command `docker push aemooooon/lab10.2`, before need login wich command `docker login`
+8. On DockerHub, go to your repository’s page. Select the “Build” item from the top menu and then click the GitHub link to connect your DockerHub repository to the associated GitHub repository that holds your container image’s build context.
 
 
 ## Docker Network
