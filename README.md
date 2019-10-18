@@ -32,7 +32,7 @@ ea2782d9ba8c        lab-net             bridge              local
 We are going to create a simple service using a Python/Flask application in one container and an Nginx reverse proxy server in a second container. Then create a Docker network to connect the two containers.
 
 ### Create a Flask Application Container
-1. Make a directory 'flaskapp' to server as a build contenxt for the Python/Flask application image. In that directory, create a dockerfile with the following contents:
+1. Make a directory 'flaskapp' to server as a build context for the Python/Flask application image. In that directory, create a dockerfile with the following contents:
 ```bash
 FROM ubuntu:16.04
 LABEL updated_on="2019-10-18 09:00"
@@ -48,11 +48,31 @@ RUN pip3 install -r requirements.txt
 EXPOSE 5000
 ENTRYPOINT "./startup.sh"
 ```
-2. clone the GitHub repository [aemooooon/lab-4-app]('https://github.com/aemooooon/lab-4-app') into your context.
-3. build container image with the tag: `docker build -t="aemooooon/flaskapp" .`
+2. Clone the GitHub repository [aemooooon/lab-4-app]('https://github.com/aemooooon/lab-4-app') into your context.
+3. Build container image with the tag: `docker build -t="aemooooon/flaskapp" .`
 4. Run command `docker run -d --rm --name flaskapp -p 5000:5000 aemooooon/flaskapp` to test.
 The application should works now, but for a production deployment we need to place it behind a reverse proxy server. For this, we will need a second container. Shut down flaskapp container.
 
 ### Create an Nginx Container
-
+1. Make a directory 'nginx' to serer as a build context. Place a dockerfile in it with the following:
+```bash
+FROM nginx:1.13
+COPY flaskapp.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+```
+2. Add flaskapp.conf file to the context with the following:
+```bash
+resolver 127.0.0.11 valid=1s;
+server {
+  set $alias "flaskapp";
+  location / {
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_pass http://$alias:5000;
+  }
+  listen 80;
+}
+This will cause nginx to send proxy requests to a flaskapp host.
+```
+3. Build this image with the tag: `docker build -t="aemooooon/nginx" .`
 ### Create a Docker Network
