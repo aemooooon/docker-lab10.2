@@ -1,6 +1,8 @@
 # Docker-lab10.2
 
 ## Docker Network
+1. 不同的网络之间相互隔离，无法访问。
+2. 如果是用户自定义的网络，我们不仅可以通过IP地址访问，同时也能通过主机名访问。
 
 * List Networks
 
