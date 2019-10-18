@@ -84,6 +84,13 @@ docker attach fred # attach 'fred' container to the console.(if run `docker ps` 
 
 > docker pull debian:8.1 # Asked for the image with from the debian repository with the 8.1 tag
 
+* Pull and run a container from docker hub image
+
+> sudo docker run -p 80:80 -p 2222:22 --name wordpress -d tlongren/docker-wordpress-nginx-ssh:stable
+
+The -p option map ports between the container and the host system. Once your container is running, you should be able to browse to your virtual machine with a web browser and see the initial Wordpress setup screen. You can also ssh into your container by ssh’ing to your host machine’s ip address at port 2222. For ssh, the user name and password are both wordpress.
+
+
 
 ## Docker Network
 1. 不同的网络之间相互隔离，无法访问。
