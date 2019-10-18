@@ -18,7 +18,7 @@ ea2782d9ba8c        lab-net             bridge              local
 ```
 * Create an additional bridged network
 
-> sudo docker network create --driver bridge network-name
+> sudo docker network create --driver bridge network-name # we simply choose bridge as driver
 
 * Run a container and place it on the specified network
 
