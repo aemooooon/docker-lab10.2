@@ -259,3 +259,62 @@ services:
 networks:
     app:
 ```
+
+flaskapp/Dockerfile
+```bash
+FROM ubuntu:16.04
+LABEL updated_on="2019-10-18 09:00"
+RUN apt-get update
+RUN apt-get -y upgrade
+RUN apt-get -y install python3 python3-setuptools python3-pip gunicorn3
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+
+COPY lab-4-app /flaskapp
+WORKDIR /flaskapp
+RUN pip3 install -r requirements.txt
+
+EXPOSE 5000
+CMD ["python", "app.py"]
+```
+
+add app.py to ./lab-4-app
+```python
+from flask import Flask
+from redis import Redis
+import os
+
+app = Flask(__name__)
+redis = Redis(host="redis-svr", port=6379)
+
+@app.route('/')
+def hello():
+    redis.incr('hits')
+    return 'Hello! I have been seen {0} times'.format(redis.get('hits'))
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
+```
+
+update requirements.txt
+```bash
+flask
+redis
+```
+
+nginx image need change name, do not need update any content.
+
+lab_12
+├── docker-compose.yml
+├── flaskapp
+│   ├── Dockerfile
+│   └── lab-4-app
+│       ├── app.py
+│       ├── LICENSE
+│       ├── myproject.py
+│       ├── README.md
+│       ├── requirements.txt
+│       ├── startup.sh
+│       └── wsgi.py
+└── lab12_nginx
+    ├── Dockerfile
+    └── flaskapp.conf
