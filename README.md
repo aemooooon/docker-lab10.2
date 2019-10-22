@@ -302,7 +302,7 @@ redis
 ```
 
 nginx image need change name, do not need update any content.
-
+```
 lab_12
 ├── docker-compose.yml
 ├── flaskapp
@@ -318,3 +318,4 @@ lab_12
 └── lab12_nginx
     ├── Dockerfile
     └── flaskapp.conf
+```
