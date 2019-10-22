@@ -231,3 +231,31 @@ docker run -d --rm --name flaskapp --network app aemooooon/flaskapp
 docker run -d --rm --name nginx --network app -p 8080:80 aemooooon/nginx
 ```
 Note that it doesn't matter in which order you start the containers.
+
+## Docker compose
+docer-compose.yml
+```yml
+version: "2.0"
+services:
+    lab12_flaskapp:
+        build: ./flaskapp
+        image: aemooooon/lab12_flaskapp
+        networks:
+            - app
+        depends_on:
+            - redis-svr
+    lab12_nginx:
+        image: nginx
+        ports:
+            - 8080:80
+        networks:
+            - app
+        depends_on:
+            - lab12_flaskapp
+    redis-svr:
+        image: redis:latest
+        networks:
+            - app
+networks:
+    app:
+```
