@@ -23,3 +23,11 @@ Original contents retained as /home/wangh21/.ssh/known_hosts.old
 
 
 `ssh-keygen -R "10.25.100.116"`
+
+
+On the client side, if you are using the ssh command line program, add the following lines to ~/.ssh/config. This will enable this feature for all remote hosts.
+```bash
+Host *
+    ServerAliveInterval 300
+    ServerAliveCountMax 2
+```
