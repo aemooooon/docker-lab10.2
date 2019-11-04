@@ -232,6 +232,15 @@ docker run -d --rm --name nginx --network app -p 8080:80 aemooooon/nginx
 ```
 Note that it doesn't matter in which order you start the containers.
 
+> output: nginx directs to the flaskapp
+
+```bash
+user@placeholder-0:~/virt-assignment3$ sudo docker ps
+CONTAINER ID        IMAGE                COMMAND                   CREATED              STATUS              PORTS                  NAMES
+ee11f2572401        aemooooon/nginx      "nginx -g 'daemon of…"    About a minute ago   Up About a minute   0.0.0.0:8080->80/tcp   nginx
+ab01ad77ec95        aemooooon/flaskapp   "/bin/sh -c \"./start…"   About a minute ago   Up About a minute   5000/tcp               flaskapp
+```
+
 ## Docker compose
 docer-compose.yml
 ```yml
