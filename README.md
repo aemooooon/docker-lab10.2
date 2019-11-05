@@ -246,22 +246,23 @@ docer-compose.yml
 ```yml
 version: "2.0"
 services:
-    lab12_flaskapp:
+    flaskapp:
         build: ./flaskapp
-        image: aemooooon/lab12_flaskapp
+        image: aemooooon/flaskapp
         networks:
             - app
         depends_on:
-            - redis-svr
-    lab12_nginx:
-        image: nginx
+            - redis
+    nginx:
+        build: ./nginx
+        image: aemooooon/nginx
         ports:
             - 8080:80
         networks:
             - app
         depends_on:
-            - lab12_flaskapp
-    redis-svr:
+            - flaskapp
+    redis:
         image: redis:latest
         networks:
             - app
@@ -272,18 +273,16 @@ networks:
 flaskapp/Dockerfile
 ```bash
 FROM ubuntu:16.04
-LABEL updated_on="2019-10-18 09:00"
+LABEL updated_on="2019-11-05"
 RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get -y install python3 python3-setuptools python3-pip gunicorn3
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
-
-COPY lab-4-app /flaskapp
+COPY virt-assn1-app /flaskapp
 WORKDIR /flaskapp
 RUN pip3 install -r requirements.txt
-
 EXPOSE 5000
-CMD ["python", "app.py"]
+ENTRYPOINT "./startup.sh"
 ```
 
 add app.py to ./lab-4-app
