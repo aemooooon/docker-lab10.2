@@ -327,3 +327,10 @@ lab_12
     ├── Dockerfile
     └── flaskapp.conf
 ```
+
+Common comand: (with docker-compose.yml file to run...)
+```bash
+docker-compose build
+docker-compose up
+docker-compose down
+```
