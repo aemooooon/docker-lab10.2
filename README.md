@@ -334,3 +334,8 @@ docker-compose build
 docker-compose up
 docker-compose down
 ```
+
+```bash
+docker stack deploy --compose-file docker-compose.yml huaapp
+docker stack services huaapp
+```
