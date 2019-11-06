@@ -60,9 +60,11 @@ WARNING: No swap limit support
 
 * Creaet a new container
 
-> docker run -i -t --name fred ubuntu /bin/bash
+> docker run -i -t --name <hua> ubuntu /bin/bash
 
 The command above will create a new container named fred based on the ubuntu base image. We have told docker to run bash on the container, and the `-i` and `-t` options connect us to an interactive console on it. Run `top` to see what is running inside the container. Use `ip a` to inspect the container's network interfaces. Type `exit` to return to the host. 
+
+> docker exec -it <hua> /bin/bash # login into Docker
 
 * Basical commands:
 
