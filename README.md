@@ -103,7 +103,7 @@ The -p option map ports between the container and the host system. Once your con
 FROM ubuntu:16.04
 # Dockerfiles always start with a FROM statement that specifies the base image type from which this container is built.
 
-LABEL maintainer="<your name/email address>"
+LABEL maintainer='<your name/email address>'
 # This identifies the person responsible for this image.
 
 RUN apt-get -q update && apt-get -yq dist-upgrade
@@ -125,13 +125,13 @@ EXPOSE 80
 
 # This will cause our container to open port 80 on the host system. Note that this doesn’t mean that the host’s port 80, or any other port, will be open or associated with the container’s port. This is done with the docker run comand.
 
-ENTRYPOINT ["/usr/sbin/apache2"]
+ENTRYPOINT ['/usr/sbin/apache2']
 CMD ["-DFOREGROUND"]
 # The ENTRYPOINT specifies the command to run inside the container to start that process. The following CMD provides arguments to the ENTRYPOINT’s command.
 # Since the ADD command specified an HTML file, you’ll need to place one inside your build context alongside the Dockerfile. This can just be a simple hello world page.
 ```
 4. Git commit and push the changes above.
-5. Build image with command `docker build -t="your-username/lab10.2"` or `docker build -t svendowideit/ambassador .` 参数 -f 表示可以随便指定image存放的路径 ref: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+5. Build image with command `docker build -t='your-username/lab10.2'` or `docker build -t svendowideit/ambassador .` 参数 -f 表示可以随便指定image存放的路径 ref: https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 6. Create dockerhub account and create repository like `aemooooon`
 7. push image with command `docker push aemooooon/lab10.2`, before need login wich command `docker login`
 8. On DockerHub, go to your repository’s page. Select the “Build” item from the top menu and then click the GitHub link to connect your DockerHub repository to the associated GitHub repository that holds your container image’s build context.
