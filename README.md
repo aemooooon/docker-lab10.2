@@ -242,6 +242,10 @@ ab01ad77ec95        aemooooon/flaskapp   "/bin/sh -c \"./start…"   About a min
 ```
 
 ## Docker compose
+With Docker Compose, we define a set of containers to boot up, and their runtime properties, all defined in a YAML
+file. Docker Compose calls each of these containers “services” which it defines as: A container that interacts with other containers in some way and that has specific runtime properties.
+We’re going to take you through installing Docker Compose and then using it to build a simple, multi-container application stack.
+
 docer-compose.yml
 ```yml
 version: "2.0"
@@ -270,62 +274,30 @@ networks:
     app:
 ```
 
-flaskapp/Dockerfile
-```bash
-FROM ubuntu:16.04
-LABEL updated_on="2019-11-05"
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get -y install python3 python3-setuptools python3-pip gunicorn3
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10
-COPY virt-assn1-app /flaskapp
-WORKDIR /flaskapp
-RUN pip3 install -r requirements.txt
-EXPOSE 5000
-ENTRYPOINT "./startup.sh"
+The files structure like below, flaskapp and nginx refer to my isolate repository both on GitHub Docker Hub.
 ```
-
-add app.py to ./lab-4-app
-```python
-from flask import Flask
-from redis import Redis
-import os
-
-app = Flask(__name__)
-redis = Redis(host="redis-svr", port=6379)
-
-@app.route('/')
-def hello():
-    redis.incr('hits')
-    return 'Hello! I have been seen {0} times'.format(redis.get('hits'))
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
-```
-
-update requirements.txt
-```bash
-flask
-redis
-```
-
-nginx image need change name, do not need update any content.
-```
-lab_12
+virt-assignment3
 ├── docker-compose.yml
 ├── flaskapp
 │   ├── Dockerfile
-│   └── lab-4-app
-│       ├── app.py
-│       ├── LICENSE
+│   ├── lab-4-app
+│   │   ├── myproject.py
+│   │   ├── requirements.txt
+│   │   ├── startup.sh
+│   │   └── wsgi.py
+│   ├── README.md
+│   └── virt-assn1-app
 │       ├── myproject.py
-│       ├── README.md
 │       ├── requirements.txt
 │       ├── startup.sh
+│       ├── templates
+│       │   ├── form.html
+│       │   └── results.html
 │       └── wsgi.py
-└── lab12_nginx
+└── nginx
     ├── Dockerfile
-    └── flaskapp.conf
+    ├── flaskapp.conf
+    └── README.md
 ```
 
 Common comand: (with docker-compose.yml file to run...)
@@ -335,7 +307,64 @@ docker-compose up
 docker-compose down
 ```
 
+## SWARM
+
+Docker Swarm is a system that lets us manage containers across a collection of Docker hosts.
+
+### Using Swarm between mutipal host
+1. Create a new swarm and add the it as a manager `docker swarm init`
+2. Find the token to join new worker or manager
 ```bash
-docker stack deploy --compose-file docker-compose.yml huaapp
+docker swarm join-token worker
+docker swarm join-token manager
+```
+3. list host `docker node ls`
+4. start a service:
+```
+docker service create --name huanginx --replicas 2 aemooooon/nginx
+```
+5. list the services `docker service ls`
+6. display a specified service `docker service ps <service name>`
+7. We can actually change the number of containers running in our service with a command like this:
+```bash
+docker service scale hi=4
+```
+8. To stop the service `docker service rm <service name>`
+
+### Using Compose with Swarm
+```bash
+docker stack deploy --compose-file <path to file> stack-name 
+#example: docker stack deploy --compose-file docker-compose.yml huaapp
 docker stack services huaapp
+```
+
+docker-compose.yml # normally runs on the swarm manager
+```bash
+version: "3.7"
+services:
+    flaskapp:
+        image: aemooooon/flaskapp
+        networks:
+            - virtassignment3_app
+        depends_on:
+            - redis
+        deploy:
+            replicas: 3
+    nginx:
+        image: aemooooon/nginx:latest
+        ports:
+            - 8080:80
+        networks:
+            - virtassignment3_app
+        depends_on:
+            - flaskapp
+        deploy:
+            replicas: 3
+    redis:
+        image: redis:latest
+        networks:
+            - virtassignment3_app
+networks:
+    virtassignment3_app:
+        driver: overlay
 ```
