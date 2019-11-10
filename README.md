@@ -74,6 +74,8 @@ docker ps -a # list all containers regardless of running or not.
 docker inspect fred # get more information aobut the 'fred' container
 docker start fred # restart 'fred' container
 docker attach fred # attach 'fred' container to the console.(if run `docker ps` found the container is running without console)
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}") # Remove all untagged images
+docker rm $(docker ps -a -q) # Remove all stopped containers
 ```
 
 ## Docker Images
