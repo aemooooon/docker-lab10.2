@@ -76,6 +76,7 @@ docker start fred # restart 'fred' container
 docker attach fred # attach 'fred' container to the console.(if run `docker ps` found the container is running without console)
 docker rmi $(docker images | grep "^<none>" | awk "{print $3}") # Remove all untagged images
 docker rm $(docker ps -a -q) # Remove all stopped containers
+docker exec -it hua /bin/bash # login into Docker
 ```
 
 ## Docker Images
